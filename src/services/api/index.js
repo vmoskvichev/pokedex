@@ -13,11 +13,3 @@ export async function getList(limit = '', offset = '') {
 
 	return Promise.all(promises)
 }
-
-export async function getOne(id) {
-	console.log('id', id)
-	console.time(id)
-	const res = await fetchData(rootUrl + '/pokemon/' + id)
-	console.timeEnd(id)
-	return res
-}

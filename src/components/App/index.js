@@ -17,7 +17,6 @@ function App() {
 		<PokemonsProvider>
 			<Header />
 			<Container>
-				<Redirect exact from='/' to='/pokemons' />
 				<Switch>
 					{Routes.CardsPage}
 					{Routes.PokemonInfoPage}

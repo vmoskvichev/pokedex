@@ -77,7 +77,7 @@ const Card = ({ pokemon }) => {
 	const isFavorite = !!state.favorites[pokemon.id]
 
 	return (
-		<CardOuther key={pokemon.id}>
+		<CardOuther>
 			<CardImg>
 				<PokemonImage src={pokemon.sprites.other.dream_world.front_default} />
 			</CardImg>

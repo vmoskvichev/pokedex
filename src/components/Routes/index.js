@@ -14,21 +14,25 @@ const PokemonInfoPage = (
 )
 
 const CardsPage = (
-	<Route path='/pokemons' exact render={() => <Cards />} />
+	<Route
+		path='/pokemons/list/:page/:offset'
+		exact
+		render={({ match }) => {
+			const { page, offset } = match.params
+			return <Cards page={page} offset={offset} />
+		}}
+	/>
 )
 
-// const CardsPage = (
-// 	<Route
-// 		path='/pokemons/page/:page'
-// 		exact
-// 		render={({ match }) => {
-// 			const { page } = match.params
-// 			return <Cards page={page} />
-// 		}}
-// 	/>
-// )
-
-const FavoritesPage = <Route path='/favorites' render={() => <Favorites />} />
+const FavoritesPage = (
+	<Route
+		path='/pokemons/favorites/list/:page/:offset'
+		render={({ match }) => {
+			const { page, offset } = match.params
+			return <Favorites page={page} offset={offset} />
+		}}
+	/>
+)
 
 export default {
 	PokemonInfoPage,

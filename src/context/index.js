@@ -11,6 +11,7 @@ export function PokemonsProvider({ children }) {
 	)
 
 	const [favorites, setFavorites] = useState(localStorageUtils.getFavorites())
+	const [currentList, setCurrentList] = useState([])
 
 	useEffect(() => {
 		refetch()
@@ -30,6 +31,7 @@ export function PokemonsProvider({ children }) {
 		setFavorites(updatedFavorites)
 	}
 
+
 	return (
 		<PokemonsContext.Provider
 			value={{
@@ -38,6 +40,8 @@ export function PokemonsProvider({ children }) {
 					error,
 					isLoading,
 					favorites,
+					currentList,
+					setCurrentList,
 					markFavorites,
 				},
 			}}>
