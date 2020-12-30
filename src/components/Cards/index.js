@@ -36,18 +36,14 @@ const Circle = styled.div`
 	top: 50%;
 `
 
-const Cards = ({ page, offset }) => {
+const Cards = () => {
 	const { state } = useContext(PokemonsContext)
 
 	if (state.isLoading) return <Preloader View={Circle} />
 
 	return (
 		<>
-			<Pagination
-				arr={Object.values(state.payload)}
-				offset={offset}
-				page={page}
-			/>
+			<Pagination arr={Object.values(state.payload)} />
 			<CardsCollection>
 				{state.currentList.map((pokemon) => (
 					<Card pokemon={pokemon} key={pokemon.id} />

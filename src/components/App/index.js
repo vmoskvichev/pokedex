@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Header from '../Header'
 import Routes from '../Routes'
 import { PokemonsProvider } from '../../context'
-import { Redirect, Switch } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 
 export const Container = styled.div`
 	margin: 0 auto;

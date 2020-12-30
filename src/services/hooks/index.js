@@ -39,28 +39,26 @@ function useAPI(cb) {
 	return [state, { refetch }]
 }
 
-// Pagination logic
-const initialState = {
-	items: [],
-	currentPage: 1,
-	quantityOfPages: 1,
-}
-
-function usePagination(allItems, itemsOnPage = 8, page) {
-	const [state, setState] = useState(initialState)
+function usePagination(allItems, page, offset) {
+	const [state, setState] = useState({
+		items: [],
+		currentPage: page,
+		quantityOfPages: 1,
+		offset: 8,
+	})
 
 	const changePage = useCallback(
 		(currentPage = 1) => {
-			const idxOfLastItem = currentPage * itemsOnPage
-			const idxOfFirstItem = idxOfLastItem - itemsOnPage
+			const idxOfLastItem = currentPage * offset
+			const idxOfFirstItem = idxOfLastItem - offset
 
 			setState({
 				currentPage: +currentPage,
-				quantityOfPages: Math.ceil(allItems.length / itemsOnPage),
+				quantityOfPages: Math.ceil(allItems.length / offset),
 				items: allItems.slice(idxOfFirstItem, idxOfLastItem),
 			})
 		},
-		[allItems, itemsOnPage, state]
+		[allItems, offset, page, state.items]
 	)
 
 	const goNext = () => {
@@ -82,9 +80,9 @@ function usePagination(allItems, itemsOnPage = 8, page) {
 
 	useEffect(() => {
 		changePage(page)
-	}, [])
+	}, [offset, page])
 
-	return { ...state, changePage, goNext, goPrev, goFirst, goLast, itemsOnPage }
+	return { ...state, changePage, goNext, goPrev, goFirst, goLast }
 }
 
 export { useAPI, usePagination }

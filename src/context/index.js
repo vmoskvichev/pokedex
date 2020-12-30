@@ -31,7 +31,6 @@ export function PokemonsProvider({ children }) {
 		setFavorites(updatedFavorites)
 	}
 
-
 	return (
 		<PokemonsContext.Provider
 			value={{

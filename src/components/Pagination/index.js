@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePagination } from '../../services/hooks'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useParams } from 'react-router-dom'
 import {
 	faAngleLeft,
 	faAngleRight,
@@ -45,7 +45,8 @@ const PaginationBarItem = styled.button`
 	}
 `
 
-function Pagination({ arr, offset, page }) {
+function Pagination({ arr }) {
+	const { page, offset } = useParams()
 	const {
 		items,
 		changePage,
@@ -55,8 +56,10 @@ function Pagination({ arr, offset, page }) {
 		goFirst,
 		currentPage,
 		quantityOfPages,
-		itemsOnPage,
-	} = usePagination(arr, offset, page)
+	} = usePagination(arr, page, offset)
+
+	const { pathname } = useLocation()
+	const path = pathname.match(/^\/\w+\//)[0] // ? match /pokemons/ | /favorites/ | /other_path/
 
 	const { state } = useContext(PokemonsContext)
 
@@ -66,12 +69,12 @@ function Pagination({ arr, offset, page }) {
 
 	return (
 		<PaginationBar>
-			<NavLink to={`/pokemons/list/${1}/${itemsOnPage}`}>
+			<NavLink to={`${path}list/${1}/${offset}`}>
 				<PaginationBarItem onClick={goFirst} disabled={currentPage === 1}>
 					<FontAwesomeIcon icon={faAngleDoubleLeft} />
 				</PaginationBarItem>
 			</NavLink>
-			<NavLink to={`/pokemons/list/${currentPage - 1}/${itemsOnPage}`}>
+			<NavLink to={`${path}list/${currentPage - 1}/${offset}`}>
 				<PaginationBarItem onClick={goPrev} disabled={currentPage === 1}>
 					<FontAwesomeIcon icon={faAngleLeft} />
 				</PaginationBarItem>
@@ -81,7 +84,7 @@ function Pagination({ arr, offset, page }) {
 			{currentPage > 2 &&
 				currentPage === quantityOfPages &&
 				currentPage - 2 > 0 && (
-					<NavLink to={`/pokemons/list/${currentPage - 2}/${itemsOnPage}`}>
+					<NavLink to={`${path}list/${currentPage - 2}/${offset}`}>
 						<PaginationBarItem
 							content={currentPage - 2}
 							onClick={() => changePage(currentPage - 2)}
@@ -90,7 +93,7 @@ function Pagination({ arr, offset, page }) {
 				)}
 
 			{currentPage > 1 && (
-				<NavLink to={`/pokemons/list/${currentPage - 1}/${itemsOnPage}`}>
+				<NavLink to={`${path}list/${currentPage - 1}/${offset}`}>
 					<PaginationBarItem
 						content={currentPage - 1}
 						onClick={() => changePage(currentPage - 1)}
@@ -102,32 +105,29 @@ function Pagination({ arr, offset, page }) {
 
 			{/* NEXT */}
 			{+currentPage < quantityOfPages && (
-				<NavLink to={`/pokemons/list/${currentPage + 1}/${itemsOnPage}`}>
+				<NavLink to={`${path}list/${currentPage + 1}/${offset}`}>
 					<PaginationBarItem
 						content={currentPage + 1}
 						onClick={() => changePage(currentPage + 1)}></PaginationBarItem>
 				</NavLink>
 			)}
 
-			{
-				// ! NEED FIX
-				currentPage === 1 && currentPage + 2 <= quantityOfPages && (
-					<NavLink to={`/pokemons/list/${currentPage + 2}/${itemsOnPage}`}>
-						<PaginationBarItem
-							content={+currentPage + 2}
-							onClick={() => changePage(currentPage + 2)}></PaginationBarItem>
-					</NavLink>
-				)
-			}
+			{currentPage === 1 && currentPage + 2 <= quantityOfPages && (
+				<NavLink to={`${path}list/${currentPage + 2}/${offset}`}>
+					<PaginationBarItem
+						content={currentPage + 2}
+						onClick={() => changePage(currentPage + 2)}></PaginationBarItem>
+				</NavLink>
+			)}
 
-			<NavLink to={`/pokemons/list/${+currentPage + 1}/${itemsOnPage}`}>
+			<NavLink to={`${path}list/${+currentPage + 1}/${offset}`}>
 				<PaginationBarItem
 					onClick={goNext}
 					disabled={currentPage === quantityOfPages}>
 					<FontAwesomeIcon icon={faAngleRight} />
 				</PaginationBarItem>
 			</NavLink>
-			<NavLink to={`/pokemons/list/${quantityOfPages}/${itemsOnPage}`}>
+			<NavLink to={`${path}list/${quantityOfPages}/${offset}`}>
 				<PaginationBarItem
 					onClick={goLast}
 					disabled={currentPage === quantityOfPages}

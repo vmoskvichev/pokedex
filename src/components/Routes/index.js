@@ -3,35 +3,14 @@ import Cards from '../Cards'
 import PokemonInfo from '../PokemonInfo'
 import Favorites from '../Favorites'
 
-const PokemonInfoPage = (
-	<Route
-		path='/pokemons/:id'
-		render={({ match }) => {
-			const { id } = match.params
-			return <PokemonInfo id={id} />
-		}}
-	/>
-)
+const PokemonInfoPage = <Route path='/pokemons/:id' component={PokemonInfo} />
 
 const CardsPage = (
-	<Route
-		path='/pokemons/list/:page/:offset'
-		exact
-		render={({ match }) => {
-			const { page, offset } = match.params
-			return <Cards page={page} offset={offset} />
-		}}
-	/>
+	<Route path='/pokemons/list/:page/:offset' exact component={Cards} />
 )
 
 const FavoritesPage = (
-	<Route
-		path='/pokemons/favorites/list/:page/:offset'
-		render={({ match }) => {
-			const { page, offset } = match.params
-			return <Favorites page={page} offset={offset} />
-		}}
-	/>
+	<Route path='/favorites/list/:page/:offset' component={Favorites} />
 )
 
 export default {

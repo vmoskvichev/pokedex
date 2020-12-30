@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Card from '../Card'
 import { CardsCollection } from '../Cards'
 import { PokemonsContext } from '../../context'
@@ -18,20 +18,21 @@ const a = styled.div`
 	top: 50%;
 `
 
-const Favorites = ({ page, offset }) => {
+const Favorites = () => {
 	const { state } = useContext(PokemonsContext)
-	const hasContent = Object.keys(state.favorites).length
-	return !hasContent ? (
+	const hasFavorites = Object.keys(state.favorites).length
+
+	useEffect(() => {
+		state.setCurrentList(Object.values(state.favorites))
+	}, [state.favorites])
+
+	return !hasFavorites ? (
 		<Preloader View={a} />
 	) : (
 		<>
-			<Pagination
-				arr={Object.values(state.favorites)}
-				offset={offset}
-				page={page}
-			/>
+			<Pagination arr={Object.values(state.favorites)} />
 			<CardsCollection>
-				{Object.values(state.favorites).map((pokemon) => (
+				{state.currentList.map((pokemon) => (
 					<Card pokemon={pokemon} key={pokemon.id} />
 				))}
 			</CardsCollection>

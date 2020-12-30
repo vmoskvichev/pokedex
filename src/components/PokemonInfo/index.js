@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams} from 'react-router-dom'
 import styled from 'styled-components'
 import { PokemonsContext } from '../../context'
 import { Container } from '../App'
@@ -11,8 +11,9 @@ const Content = styled.div`
 
 const Info = styled.div``
 
-const PokemonInfo = ({ id }) => {
+function PokemonInfo() {
 	const { state } = useContext(PokemonsContext)
+	const { id } = useParams()
 
 	return (
 		<div>

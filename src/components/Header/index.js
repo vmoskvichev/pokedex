@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Container } from '../../components/App'
 
@@ -31,10 +31,10 @@ const Header = () => {
 					<nav>
 						<NavList>
 							<NavListItem>
-								<NavLink to='/favorites'>Favorites</NavLink>
+								<NavLink to='/favorites/list/1/8'>Favorites</NavLink>
 							</NavListItem>
 							<NavListItem>
-								<NavLink exact to='/pokemons'>
+								<NavLink exact to='/pokemons/list/1/8'>
 									Pokemons
 								</NavLink>
 							</NavListItem>
